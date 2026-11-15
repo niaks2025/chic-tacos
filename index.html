@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chic Tacos & Panini</title>
+  <style>
+    :root{
+      --ink:#1f2937;
+      --muted:#6b7280;
+      --card: rgba(255,255,255,.72);
+      --card2: rgba(255,255,255,.55);
+      --line: rgba(31,41,55,.12);
+
+      --egg:#f3c64a;     
+      --egg2:#ffe9c1;    
+      --milk:#ffffff;    
+      --cream:#f7f0d8;   
+      --shadow: 0 12px 30px rgba(0,0,0,.12);
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(1200px 600px at 10% 0%, rgba(255,255,255,.55), transparent 60%),
+        radial-gradient(900px 500px at 95% 10%, rgba(255,255,255,.35), transparent 55%),
+        linear-gradient(135deg, var(--egg) 0%, var(--egg2) 35%, var(--milk) 70%, var(--cream) 100%);
+      min-height:100vh;
+    }
+
+    
+    .wrap{ width:min(1100px, 92vw); margin:0 auto; padding:24px 0 70px; }
+
+    
+    header{
+      position:sticky;
+      top:0;
+      z-index:20;
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,.35);
+      border-bottom:1px solid rgba(31,41,55,.08);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px; padding:14px 0;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      text-decoration:none; color:var(--ink);
+      font-weight:800; letter-spacing:.2px;
+    }
+    .logo{
+      width:44px; height:44px; border-radius:14px;
+      background: linear-gradient(145deg, rgba(243,198,74,1), rgba(255,255,255,.7));
+      border:1px solid rgba(31,41,55,.12);
+      box-shadow: 0 10px 20px rgba(0,0,0,.08);
+      position:relative;
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .logo:before{
+      content:"";
+      position:absolute; inset:-30% -20%;
+      background: radial-gradient(circle at 35% 35%, rgba(255,255,255,.85), transparent 55%);
+      transform: rotate(15deg);
+    }
+    .navlinks{
+      display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    }
+    .navlinks a{
+      text-decoration:none; color:var(--ink);
+      font-weight:650;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid transparent;
+      transition:.2s ease;
+      background: rgba(255,255,255,.25);
+    }
+    .navlinks a:hover{
+      border-color: rgba(31,41,55,.12);
+      background: rgba(255,255,255,.55);
+      transform: translateY(-1px);
+    }
+
+    
+    .hero{
+      padding:28px 0 18px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    @media (max-width: 900px){
+      .hero{ grid-template-columns: 1fr; }
+    }
+    .hero-card{
+      background: var(--card);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:22px;
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-card:after{
+      content:"";
+      position:absolute;
+      right:-120px; top:-140px;
+      width:260px; height:260px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.8), transparent 60%);
+      transform: rotate(25deg);
+      pointer-events:none;
+    }
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:7px 12px;
+      border-radius:999px;
+      border:1px solid rgba(31,41,55,.12);
+      background: rgba(255,255,255,.4);
+      font-weight:750;
+      color: rgba(31,41,55,.9);
+    }
+    .kdot{
+      width:10px; height:10px; border-radius:50%;
+      background: linear-gradient(145deg, #f3c64a, #ffffff);
+      border:1px solid rgba(31,41,55,.18);
+    }
+    h1{
+      margin:14px 0 10px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height:1.05;
+      letter-spacing:-.6px;
+    }
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-weight:600;
+      font-size: 16px;
+    }
+    .hero-actions{
+      margin-top:18px;
+      display:flex; gap:12px; flex-wrap:wrap;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:14px;
+      text-decoration:none;
+      font-weight:800;
+      border:1px solid rgba(31,41,55,.12);
+      transition:.2s ease;
+      background: rgba(255,255,255,.55);
+      color:var(--ink);
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.72); }
+    .btn.primary{
+      background: linear-gradient(145deg, rgba(243,198,74,1), rgba(255,255,255,.75));
+      border-color: rgba(31,41,55,.14);
+    }
+
+    .side{
+      background: rgba(255,255,255,.52);
+      border:1px solid rgba(31,41,55,.12);
+      border-radius:20px;
+      box-shadow: 0 10px 24px rgba(0,0,0,.08);
+      padding:18px;
+    }
+    .side h3{ margin:0 0 10px; font-size:18px; }
+    .side p{ margin:8px 0; color:var(--muted); font-weight:650; }
+    .meta{
+      margin-top:12px;
+      border-top:1px dashed rgba(31,41,55,.18);
+      padding-top:12px;
+      display:grid;
+      gap:10px;
+    }
+    .pill{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:12px;
+      border-radius:16px;
+      background: rgba(255,255,255,.55);
+      border:1px solid rgba(31,41,55,.10);
+    }
+    .icon{
+      width:36px; height:36px; border-radius:14px;
+      border:1px solid rgba(31,41,55,.12);
+      background: linear-gradient(145deg, rgba(243,198,74,.95), rgba(255,255,255,.75));
+      display:flex; align-items:center; justify-content:center;
+      font-size:18px;
+      flex:0 0 auto;
+    }
+
+    
+    section{
+      margin-top:18px;
+      background: rgba(255,255,255,.40);
+      border:1px solid rgba(31,41,55,.10);
+      border-radius:22px;
+      box-shadow: 0 12px 28px rgba(0,0,0,.06);
+      overflow:hidden;
+    }
+    .section-inner{ padding:18px; }
+    .section-title{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; margin-bottom:12px;
+    }
+    .section-title h2{
+      margin:0;
+      font-size:22px;
+      letter-spacing:-.2px;
+    }
+    .section-title .tag{
+      font-weight:850;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(31,41,55,.12);
+      background: rgba(255,255,255,.55);
+      color: rgba(31,41,55,.95);
+      font-size:13px;
+      white-space:nowrap;
+    }
+
+    
+    .about-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    @media (max-width: 900px){
+      .about-grid{ grid-template-columns:1fr; }
+    }
+    .box{
+      background: rgba(255,255,255,.55);
+      border:1px solid rgba(31,41,55,.10);
+      border-radius:18px;
+      padding:14px;
+    }
+    .box h3{ margin:0 0 8px; font-size:16px; }
+    .box ul{ margin:0; padding-left:18px; color:var(--muted); font-weight:650; }
+    .box li{ margin:8px 0; }
+
+    
+    .menu-days{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+    .menu-day{
+      appearance:none;
+      border:1px solid rgba(31,41,55,.12);
+      background:rgba(255,255,255,.55);
+      color:var(--ink);
+      padding:9px 14px;
+      border-radius:999px;
+      font:inherit;
+      font-size:14px;
+      font-weight:800;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    .menu-day:hover{ transform:translateY(-1px); }
+    .menu-day.active{
+      background:linear-gradient(145deg, rgba(243,198,74,1), rgba(255,255,255,.75));
+    }
+    .menu-grid{
+      display:grid;
+      gap:12px;
+    }
+    .menu-item{
+      display:flex;
+      min-height:130px;
+      overflow:hidden;
+      border:1px solid rgba(31,41,55,.10);
+      border-radius:18px;
+      background:rgba(255,255,255,.55);
+    }
+    .menu-item-image,
+    .menu-item-visual{
+      width:150px;
+      min-width:150px;
+      object-fit:cover;
+    }
+    .menu-item-visual{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(145deg, rgba(243,198,74,.7), rgba(255,255,255,.8));
+      font-size:42px;
+    }
+    .menu-item-content{
+      display:flex;
+      flex:1;
+      flex-direction:column;
+      align-items:flex-start;
+      padding:14px 18px;
+    }
+    .menu-item-category{
+      color:var(--muted);
+      font-size:12px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.5px;
+    }
+    .menu-item h3{
+      margin:4px 0 10px;
+      font-size:16px;
+    }
+    .menu-item-price{
+      margin-top:auto;
+      padding:8px 13px;
+      border:1px solid rgba(31,41,55,.12);
+      border-radius:12px;
+      background:linear-gradient(145deg, rgba(243,198,74,1), rgba(255,255,255,.75));
+      color:var(--ink);
+      font-weight:850;
+    }
+    .menu-order{
+      margin-top:9px;
+      color:var(--ink);
+      font-size:13px;
+      font-weight:800;
+      text-decoration:none;
+    }
+    .menu-order:hover{ text-decoration:underline; }
+    @media (max-width:560px){
+      .menu-item{ min-height:120px; }
+      .menu-item-image,
+      .menu-item-visual{
+        width:105px;
+        min-width:105px;
+      }
+      .menu-item-content{ padding:12px; }
+      .menu-item h3{ font-size:14px; }
+      .menu-item-visual{ font-size:34px; }
+    }
+    .small-note{
+      color:var(--muted);
+      font-weight:650;
+      margin-top:10px;
+      font-size:13px;
+    }
+
+    
+    footer{
+      margin-top:18px;
+      text-align:center;
+      color:var(--muted);
+      font-weight:650;
+      padding:18px 0 0;
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#accueil" aria-label="Retour accueil">
+      <div class="logo" aria-hidden="true"></div>
+      <div>Chic Tacos &amp; Panini</div>
+    </a>
+    <nav class="navlinks">
+      <a href="#accueil">Accueil</a>
+      <a href="#menu">Menu</a>
+      <a href="#apropos">À propos</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  
+  <div id="accueil" class="hero">
+    <div class="hero-card">
+      <div class="kicker"><span class="kdot"></span> Tacos • Panini • Shawarma</div>
+      <h1>Chic &amp; savoureux.<br/>Commandez vos spécialités.</h1>
+      <p class="subtitle">Ambiance chic, recettes généreuses, prix clairs.</p>
+
+      <div class="hero-actions">
+        <a class="btn primary" id="btnWhatsapp" href="#" target="_blank" rel="noopener">
+          🟢 WhatsApp
+        </a>
+        <a class="btn" href="#menu">Voir le menu</a>
+      </div>
+
+      <p class="small-note">Astuce : appuyez sur une catégorie pour filtrer le menu.</p>
+    </div>
+
+    <aside class="side">
+      <h3>Infos du stand</h3>
+      <p><b>WhatsApp :</b> +242 044 910 515</p>
+      <p><b>Adresse :</b> La Base Industrielle, avenue de DGc et 2i (université), pas loin de la société PELLIGRÉNI</p>
+
+      <div class="meta">
+        <div class="pill">
+          <div class="icon">📍</div>
+          <div>
+            <b>Localisation</b>
+            <div style="color:var(--muted);font-weight:650;margin-top:4px;">
+              La Base Industrielle — accès facile.
+            </div>
+          </div>
+        </div>
+        <div class="pill">
+          <div class="icon">🍽️</div>
+          <div>
+            <b>Commande rapide</b>
+            <div style="color:var(--muted);font-weight:650;margin-top:4px;">
+              Envoyez “Je commande …” sur WhatsApp.
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  
+  <section id="menu">
+    <div class="section-inner">
+      <div class="section-title">
+        <h2>Menu</h2>
+        <div class="tag">Prix en FCFA</div>
+      </div>
+
+      <h3 id="menuDayTitle" aria-live="polite"></h3>
+      <p class="small-note">Choisissez un jour pour consulter le menu et commander directement sur WhatsApp.</p>
+      <div class="menu-days" id="menuDays" aria-label="Choisir le jour du menu"></div>
+      <div class="menu-grid" id="menuGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="apropos">
+    <div class="section-inner">
+      <div class="section-title">
+        <h2>À propos de nous</h2>
+        <div class="tag">Chic Tacos &amp; Panini</div>
+      </div>
+
+      <div class="about-grid">
+        <div class="box">
+          <h3>Notre mission</h3>
+          <ul>
+            <li>Servir des tacos &amp; paninis gourmands, à des prix adaptés.</li>
+            <li>Des options avec ou sans frite, et plusieurs tailles selon votre envie.</li>
+            <li>Un service simple : choisissez, puis commandez via WhatsApp.</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>Pourquoi “Chic” ?</h3>
+          <ul>
+            <li>Des menus clairs et faciles à lire.</li>
+            <li>Des recettes qui attirent : sauce, fromage, caviar, crème fraîche…</li>
+            <li>Une ambiance “stand chic” : propre, rapide, chaleureux.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>
+      © <span id="year"></span> Chic Tacos &amp; Panini — Commandez via WhatsApp : <b>+242 044 910 515</b>
+    </div>
+  </footer>
+</main>
+
+<script>
+  const phone = "+242044910515";
+  const whatsappBtn = document.getElementById("btnWhatsapp");
+  const msg = encodeURIComponent("Bonjour Chic Tacos & Panini ! Je voudrais commander : ");
+  whatsappBtn.href = `https://wa.me/${phone}?text=${msg}`;
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Modifier ou ajouter les plats dans cette liste.
+  const menuItems = [
+    { category:"Tacos", name:"Tacos normal — AVEC FRITE", price:"2500 FCFA", image:"images/tacos 1 .jpg", icon:"🌮" },
+    { category:"Tacos", name:"Tacos XL — AVEC FRITE", price:"3500 FCFA", image:"images/tacos 1 .jpg", icon:"🌮" },
+    { category:"Panini", name:"Panini", price:"2500 FCFA", image:"images/panini.jpg", icon:"🥪" },
+    { category:"Poulet", name:"Poulet crispy", price:"4000 FCFA", image:"images/poulet crispy.jpg", icon:"🍗", days:[2,5] },
+    { category:"Salade", name:"Salade poulet", price:"2000 / 2500 FCFA", image:"images/salade poulet.jpeg", icon:"🥗", days:[1] },
+    { category:"Salade", name:"Salade crudité", price:"1500 / 2000 FCFA", image:"images/salade crudité.jpg", icon:"🥗", days:[1] },
+    { category:"Shawarma", name:"Shawarma", price:"2000 FCFA", image:"images/shawarma.jpg", icon:"🌯", days:[1] },
+    { category:"Petit-déjeuner", name:"Œuf brouillé avec banane", price:"2000 / 1500 FCFA", image:"images/oeuf brouillé banane.jpg", icon:"🍳", days:[1] },
+    { category:"Boissons", name:"Cacao écrémé", price:"1000 FCFA", image:"images/cacao-ecreme.jpg", icon:"☕" },
+    { category:"Boissons", name:"Jus de baobab", price:"1000 FCFA", image:"images/jus-baobab.jpg", icon:"🥤" },
+    { category:"Boissons", name:"Bissap", price:"1000 FCFA", image:"images/bissap.jpg", icon:"🥤" },
+    { category:"Plat", name:"Riz au gras", price:"2500 FCFA", image:"images/riz au gras.jpg", icon:"🍚", days:[2] },
+    { category:"Plat", name:"Escargot sauté avec banane", price:"3500 FCFA", image:"images/escargot-banane.jpg", icon:"🐌", days:[2] },
+    { category:"Plat", name:"Gésier avec banane", price:"3500 FCFA", image:"images/gesier-banane.jpeg", icon:"🍌", days:[2] },
+    { category:"Mignardises", name:"Box de mignardises", price:"À partir de 5000 FCFA", image:"images/box-miniardises.png", icon:"🍱" }
+  ];
+
+  const menuDays = [
+    "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"
+  ];
+  const menuDaysElement = document.getElementById("menuDays");
+  const menuGrid = document.getElementById("menuGrid");
+  const menuDayTitle = document.getElementById("menuDayTitle");
+  const today = new Date().getDay();
+  const todayIndex = today === 0 ? 6 : today - 1;
+  let selectedDayIndex = todayIndex;
+
+  function renderMenu(dayIndex){
+    selectedDayIndex = dayIndex;
+    const dayName = menuDays[dayIndex];
+    menuDayTitle.textContent = `Menu du ${dayName}`;
+    menuDaysElement.querySelectorAll(".menu-day").forEach((button, index)=>{
+      button.classList.toggle("active", index === dayIndex);
+      button.setAttribute("aria-pressed", String(index === dayIndex));
+    });
+
+    menuGrid.replaceChildren();
+    menuItems.filter(item=>!item.days || item.days.includes(dayIndex + 1)).forEach(item=>{
+      const card = document.createElement("article");
+      card.className = "menu-item";
+
+      if(item.image){
+        const image = document.createElement("img");
+        image.className = "menu-item-image";
+        image.src = item.image;
+        image.alt = item.name;
+        image.loading = "lazy";
+        card.appendChild(image);
+      }else{
+        const visual = document.createElement("div");
+        visual.className = "menu-item-visual";
+        visual.setAttribute("aria-hidden", "true");
+        visual.textContent = item.icon;
+        card.appendChild(visual);
+      }
+
+      const content = document.createElement("div");
+      content.className = "menu-item-content";
+
+      const category = document.createElement("span");
+      category.className = "menu-item-category";
+      category.textContent = item.category;
+
+      const name = document.createElement("h3");
+      name.textContent = item.name;
+
+      const price = document.createElement("div");
+      price.className = "menu-item-price";
+      price.textContent = item.price;
+
+      const order = document.createElement("a");
+      order.className = "menu-order";
+      order.href = `https://wa.me/${phone.replace(/\D/g, "")}?text=${encodeURIComponent(`Bonjour, je souhaite commander : ${item.name} (${item.price}) pour ${dayName}.`)}`;
+      order.target = "_blank";
+      order.rel = "noopener noreferrer";
+      order.textContent = "Commander sur WhatsApp →";
+
+      content.append(category, name, price, order);
+      card.appendChild(content);
+      menuGrid.appendChild(card);
+    });
+  }
+
+  menuDays.forEach((day, index)=>{
+    const button = document.createElement("button");
+    button.className = "menu-day";
+    button.type = "button";
+    button.textContent = day;
+    button.setAttribute("aria-pressed", String(index === todayIndex));
+    button.addEventListener("click", ()=>renderMenu(index));
+    menuDaysElement.appendChild(button);
+  });
+  renderMenu(todayIndex);
+</script>
+</body>
+</html>
